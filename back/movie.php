@@ -54,9 +54,21 @@ $(".sw").on("click", function() {
         location.reload();
     })
 })
+
+
 $(".show").on("click", function() {
     let id = $(this).data('id');
     $.post("./api/show.php", {
+        id
+    }, () => {
+        location.reload();
+    })
+})
+
+$(".del").on("click", function() {
+    let id = $(this).data('id');
+    $.post("./api/del.php", {
+        table: 'Movies',
         id
     }, () => {
         location.reload();
