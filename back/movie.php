@@ -9,7 +9,6 @@ $rows=$Movie->all(" order by rank");
 foreach($rows as $idx=> $row):
     $prev=($idx!=0)?$rows[$idx-1]['id']:$row['id'];
     $next=($idx!=(count($rows)-1))?$rows[$idx+1]['id']:$row['id'];
-
 ?>
     <div style="display:flex;align-items:center">
         <div style="width:10%;">
@@ -55,7 +54,6 @@ $(".sw").on("click", function() {
     })
 })
 
-
 $(".show").on("click", function() {
     let id = $(this).data('id');
     $.post("./api/show.php", {
@@ -68,7 +66,7 @@ $(".show").on("click", function() {
 $(".del").on("click", function() {
     let id = $(this).data('id');
     $.post("./api/del.php", {
-        table: 'Movies',
+        table: 'Movie',
         id
     }, () => {
         location.reload();
