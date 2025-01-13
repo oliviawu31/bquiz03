@@ -13,8 +13,8 @@
 }
 
 .order-form td:nth-child(2) {
-    width: 300px;
     text-align: left;
+    width: 300px;
 }
 
 .order-form td {
@@ -25,29 +25,38 @@
     background: #999;
 }
 </style>
-<h3 class='ct'>線上訂票</h3>
-<form action="#">
-    <table class="order-form">
-        <tr>
-            <td>電影：</td>
-            <td><select name="movie" id="movie"></select></td>
-        </tr>
-        <tr>
-            <td>日期：</td>
-            <td><select name="date" id="date"></select></td>
-        </tr>
-        <tr>
-            <td>場次：</td>
-            <td><select name="session" id="session"></select></td>
-        </tr>
-        <tr>
-            <td colspan='2' class='ct'>
-                <input type="button" value="確定">
-                <input type="reset" value="重置">
-            </td>
-        </tr>
-    </table>
-</form>
+<div id="order">
+
+    <h3 class='ct'>線上訂票</h3>
+    <form action="#">
+        <table class="order-form">
+            <tr>
+                <td>電影：</td>
+                <td><select name="movie" id="movie"></select></td>
+            </tr>
+            <tr>
+                <td>日期：</td>
+                <td><select name="date" id="date"></select></td>
+            </tr>
+            <tr>
+                <td>場次：</td>
+                <td><select name="session" id="session"></select></td>
+            </tr>
+            <tr>
+                <td colspan='2' class='ct'>
+                    <input type="button" value="確定" onclick="$('#order,#booking').toggle()">
+                    <input type="reset" value="重置">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div id="booking" style="display:none">
+
+    畫位頁面
+    <button onclick="$('#order,#booking').toggle()">上一步</button>
+
+</div>
 
 <script>
 getMovies();
@@ -58,6 +67,10 @@ $("#movie").on("change", function() {
     getDays();
 })
 
+$("#date").on("change", function() {
+    getSessions();
+})
+
 function getMovies() {
     $.get("api/get_movies.php", function(movies) {
         console.log(movies);
@@ -66,6 +79,7 @@ function getMovies() {
         if (parseInt(id) > 0) {
             $(`#movie option[value='${id}']`).prop('selected', true);
         }
+
         getDays();
     })
 }
@@ -75,6 +89,17 @@ function getDays() {
         movie: $("#movie").val()
     }, function(days) {
         $("#date").html(days);
+        getSessions();
     })
+}
+
+function getSessions() {
+    $.get("api/get_sessions.php", {
+        movie: $("#movie").val(),
+        date: $("#date").val()
+    }, function(sessions) {
+        $("#session").html(sessions);
+    })
+
 }
 </script>
