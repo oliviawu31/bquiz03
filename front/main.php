@@ -170,11 +170,24 @@ $(".left,.right").on("click", function() {
         }
         // p = (p + 1 <= total - 4) ? p + 1 : total - 4;
     }
-    console.log(p)
+    // console.log(p)
     $(".icon").animate({
         right: p * 80
     });
 })
+
+$(".icons").hover(
+    // 1. 滑鼠移入做的事件
+    function() {
+        clearInterval(slider);
+    },
+    // 2. 滑鼠移出做的事件
+    function() {
+        slider = setInterval(() => {
+            sliders();
+        }, 2500);
+    },
+)
 </script>
 
 <div class="half">
