@@ -24,6 +24,10 @@
 .order-form tr:nth-child(even) {
     background: #999;
 }
+
+#booking * {
+    box-sizing: border-box;
+}
 </style>
 <div id="order">
 
@@ -110,8 +114,13 @@ function booking() {
         date: $("#date").val(),
         session: $("#session").val()
     }
-    $("#booking").html(
-        `${movie.id},${movie.date},${movie.name},<button  onclick="$('#order,#booking').toggle()">上一步</button>`)
-    $("#booking,#order").toggle();
+    // $("#booking").html(
+    //     `${movie.id},${movie.date},${movie.name},<button  onclick="$('#order,#booking').toggle()">上一步</button>`)
+
+    $.get("api/booking.php", movie, function(booking) {
+        $("#booking").html(booking)
+        $("#booking,#order").toggle();
+    })
+
 }
 </script>
