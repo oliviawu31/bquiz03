@@ -54,6 +54,10 @@ getMovies();
 let id = new URLSearchParams(location.href).get('id');
 //console.log(id);
 
+$("#movie").on("change", function() {
+    getDays();
+})
+
 function getMovies() {
     $.get("api/get_movies.php", function(movies) {
         console.log(movies);
