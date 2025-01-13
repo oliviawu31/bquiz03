@@ -51,8 +51,8 @@
 
 <script>
 getMovies();
-let id = new URLSerchParams(location.href).get('id');
-// console.log(id);
+let id = new URLSearchParams(location.href).get('id');
+//console.log(id);
 
 function getMovies() {
     $.get("api/get_movies.php", function(movies) {
@@ -62,6 +62,15 @@ function getMovies() {
         if (parseInt(id) > 0) {
             $(`#movie option[value='${id}']`).prop('selected', true);
         }
+        getDays();
+    })
+}
+
+function getDays() {
+    $.get("api/get_days.php", {
+        movie: $("#movie").val()
+    }, function(days) {
+        $("#date").html(days);
     })
 }
 </script>
