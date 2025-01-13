@@ -131,6 +131,7 @@ function sliders() {
     let next = ($(".poster").length == now + 1) ? 0 : now + 1;
     let ani = $(".poster").eq(next).data('ani');
     //console.log(now,next)
+
     switch (ani) {
         case 1:
             //淡入淡出
@@ -154,6 +155,16 @@ function sliders() {
     }
 
 }
+let total = $(".icon").length;
+let p = 0;
+$(".left,.right").on("click", function() {
+    if ((p + 1) <= (total - 4)) {
+        p++;
+    }
+    $(".icon").animate({
+        right: 80 * p
+    });
+})
 </script>
 
 
