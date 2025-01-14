@@ -91,4 +91,12 @@ $(".chk").on("change", function() {
     // $("#tickets").text(num[seats.length])
     // console.log(seats)
 })
+
+function checkout() {
+    movie.seats = seats;
+    // console.log(movie)
+    $.post("api/checkout.php", movie, function(res) {
+        console.log(res)
+    })
+}
 </script>
