@@ -59,7 +59,7 @@
 <div id="movieInfo">
     <div>您選擇的電影是：<?=$_GET['name'];?></div>
     <div>您選擇的時刻是：<?=$_GET['date']."&nbsp;&nbsp;".$_GET['session'];?></div>
-    <div>您已經<span id='tickets'></span>勾選張票，最多可以購買四張票</div>
+    <div>您已經勾選<span id='tickets'></span>張票，最多可以購買四張票</div>
     <div class='ct'>
         <button onclick="$('#booking,#order').toggle()">上一步</button>
         <button onclick="checkout()">訂購</button>
@@ -69,6 +69,12 @@
 </div>
 <script>
 let seats = new Array();
+// let num = {
+//     1: '一',
+//     2: '二',
+//     3: '三',
+//     4: '四'
+// };
 $(".chk").on("change", function() {
     if ($(this).prop('checked')) {
         if (seats.length > 3) {
@@ -80,6 +86,9 @@ $(".chk").on("change", function() {
     } else {
         seats.splice(seats.indexOf($(this).val()), 1)
     }
-    console.log(seats)
+    // 增加顯示勾選票數
+    $("#tickets").text(seats.length)
+    // $("#tickets").text(num[seats.length])
+    // console.log(seats)
 })
 </script>
