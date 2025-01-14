@@ -1,25 +1,22 @@
 <h1 class='ct'>訂單清單</h1>
-
 <div>
     快速刪除：
-    <input type="radio" name="type" value="date" checked>依日期
+    <input type="radio" name="type" value='date' checked>依日期
     <input type="text" name="date" id="date">
 
-    <input type="radio" name="type" value="date" checked>依電影
+    <input type="radio" name="type" value="movie">依電影
     <select name="movie" id="movie">
         <?php
-        $movies=q("select movie from orders group by `movie`");
-        foreach($movies as $movie){
-            echo "<option vlaue='{$movie['movie']}'";
-            echo $movie['movie'];
-            echo "</option>";
-
-        }
-
+            $movies=q("select movie from orders group by `movie`");
+            foreach($movies as $movie){
+                echo "<option value='{$movie['movie']}'>";
+                echo $movie['movie'];
+                echo "</option>";
+            }
         ?>
     </select>
+    <button onclick="qdel()">刪除</button>
 </div>
-
 <style>
 .header {
     display: flex;
@@ -43,8 +40,9 @@
 </div>
 <div style="height:300px;overflow:auto">
     <?php 
-    $orders=$Order->all();
+    $orders=$Order->all(" order by no desc");
     foreach($orders as $order):
+
     ?>
     <div style="display:flex;align-items:center">
         <div style="text-align:center;width:14.2%"><?=$order['no'];?></div>
@@ -67,3 +65,39 @@
     <hr>
     <?php endforeach; ?>
 </div>
+
+<script>
+function del(id) {
+    if (confirm("確定要刪除此訂單嗎?")) {
+        $.post("api/del.php", {
+            table: 'Order',
+            id
+        }, function() {
+            location.reload();
+        })
+    }
+}
+
+function qdel() {
+    let type = $("input[name='type']:checked").val();
+    let data = "";
+    switch (type) {
+        case "date":
+            data = $("#date").val();
+            break;
+        case "movie":
+            data = $("#movie").val();
+            break;
+    }
+
+    if (confirm("確定要刪除所有符合條件的訂單嗎?")) {
+        $.post("api/qdel.php", {
+            type,
+            data
+        }, function() {
+            location.reload();
+        })
+    }
+
+}
+</script>

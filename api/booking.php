@@ -45,15 +45,16 @@
 }
 </style>
 <?php  include_once "db.php";?>
+
 <div id="info">
-    <?php
-    for($i=0;$i<20;$i++){
-        echo "<div class='seat null'>";
-        echo floor($i/5)+1 ."排".($i%5+1)."號";
-        echo "<input type='checkbox' class='chk' value='$i'>";
-        echo "</div>";
-    }
-?>
+    <?php 
+        for($i=0;$i<20;$i++){
+            echo "<div class='seat null'>";
+            echo  floor($i/5)+1 ."排".($i%5+1)."號";
+            echo "<input type='checkbox' class='chk' value='$i'>";
+            echo "</div>";
+        }
+    ?>
 
 </div>
 <div id="movieInfo">
@@ -64,17 +65,12 @@
         <button onclick="$('#booking,#order').toggle()">上一步</button>
         <button onclick="checkout()">訂購</button>
     </div>
-</div>
 
 </div>
 <script>
 let seats = new Array();
-// let num = {
-//     1: '一',
-//     2: '二',
-//     3: '三',
-//     4: '四'
-// };
+//let num={1:'一',2:'二',3:'三',4:'四'};
+
 $(".chk").on("change", function() {
     if ($(this).prop('checked')) {
         if (seats.length > 3) {
@@ -86,17 +82,17 @@ $(".chk").on("change", function() {
     } else {
         seats.splice(seats.indexOf($(this).val()), 1)
     }
-    // 增加顯示勾選票數
     $("#tickets").text(seats.length)
-    // $("#tickets").text(num[seats.length])
-    // console.log(seats)
+    //$("#tickets").text(num[seats.length])
+    //console.log(seats)
+
 })
 
 function checkout() {
     movie.seats = seats;
-    // console.log(movie)
+    //console.log(movie)
     $.post("api/checkout.php", movie, function(res) {
-        // console.log(res)
+        //console.log(res)
         $("#mm").html(res);
     })
 }
